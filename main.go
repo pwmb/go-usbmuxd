@@ -91,9 +91,9 @@ func (usb USBDeviceDelegate) USBDeviceDidFailToConnect(device USB.ConnectedDevic
 	}
 
 }
-func (usb USBDeviceDelegate) USBDeviceDidReceiveData(device USB.ConnectedDevices, deviceID int, data []byte) {
+func (usb USBDeviceDelegate) USBDeviceDidReceiveData(device USB.ConnectedDevices, deviceID int, messageTAG uint32, data []byte) {
 	// received data from the device
-	log.Println(string(data[20:]))
+	log.Println(string(data))
 	//device.SendData(data[20:], 106)
 }
 func (usb USBDeviceDelegate) USBDeviceDidDisconnect(devices USB.ConnectedDevices, deviceID int, toPort int) {
