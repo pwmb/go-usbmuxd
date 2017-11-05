@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
-	"fmt"
 	"github.com/SoumeshBanerjee/go-usbmuxd/frames"
 	"howett.net/plist"
 	"io"
 	"net"
+    "log"
 )
 
 type (
@@ -49,7 +49,7 @@ func (device ConnectedDevices) SendData(data []byte, messageTagType uint32) {
 	if device.Connection != nil {
 		_, err := device.Connection.Write(append(headerBuffer, data...))
 		if err != nil {
-			fmt.Println(err.Error())
+		    log.Println(err.Error())
 		}
 	}
 }
@@ -117,11 +117,11 @@ func connectFrameParser(conn net.Conn, deviceID int, toPort int, device Connecte
 		if data.MessageType != "Result" {
 			// parse the TAG and other relevant header info
 			headerBuffer := chunk[:16]
-			//fmt.Println(binary.BigEndian.Uint32(headerBuffer[0:4]))
-			//fmt.Println(binary.BigEndian.Uint32(headerBuffer[4:8]))
-			//fmt.Println(binary.BigEndian.Uint32(headerBuffer[8:12]))
-			//fmt.Println(binary.BigEndian.Uint32(headerBuffer[12:16]))
-			//fmt.Println(binary.BigEndian.Uint32(headerBuffer[16:20]))
+			//log.Println(binary.BigEndian.Uint32(headerBuffer[0:4]))
+			//log.Println(binary.BigEndian.Uint32(headerBuffer[4:8]))
+			//log.Println(binary.BigEndian.Uint32(headerBuffer[8:12]))
+			//log.Println(binary.BigEndian.Uint32(headerBuffer[12:16]))
+			//log.Println(binary.BigEndian.Uint32(headerBuffer[16:20]))
 			device.Delegate.USBDeviceDidReceiveData(device, deviceID, binary.BigEndian.Uint32(headerBuffer[4:8]), chunk[:n])
 		}
 	}
