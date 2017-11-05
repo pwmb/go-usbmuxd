@@ -13,5 +13,3 @@ func Tunnel() (net.Conn, error) {
 	}
 	return conn, nil
 }
-
-
